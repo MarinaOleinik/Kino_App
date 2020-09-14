@@ -47,28 +47,56 @@ namespace Kino_App
             this.Controls.Add(osta);
             osta.Click += Osta_Click;
         }
-
         private void Osta_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < 4; i++)
+            var vastus = MessageBox.Show("Kas oled kindel?", 
+                "Appolo küsib", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (vastus == DialogResult.Yes)
             {
-                for (int j = 0; j < 4; j++)
+                for (int i = 0; i < 4; i++)
                 {
-                    if (_arr[i, j].BackColor==Color.Yellow)
+                    for (int j = 0; j < 4; j++)
                     {
-                        _arr[i, j].BackColor = Color.Red;
+                        if (_arr[i, j].BackColor == Color.Yellow)
+                        {
+                            _arr[i, j].BackColor = Color.Red;
+                        }
                     }
                 }
             }
+            else
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        if (_arr[i, j].BackColor == Color.Yellow)
+                        {
+                            _arr[i, j].Text = " Koht" + (j + 1);
+                            _arr[i, j].BackColor = Color.Green;
+                        }
+                    }
+                }
+            }
+            
         }
 
         void Form1_Click(object sender, EventArgs e)
         {
             var label = (Label)sender;//запомникли на какую надпись нажали
             var tag = (int[])label.Tag;//определили координаты надписи
-            //MessageBox.Show("Kas oled kindel?", "Appolo küsib", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            _arr[tag[0], tag[1]].Text = "Kinni";
-            _arr[tag[0], tag[1]].BackColor = Color.Yellow;
+
+                if (_arr[tag[0], tag[1]].Text != "Kinni")
+                {
+                    _arr[tag[0], tag[1]].Text = "Kinni";
+                    _arr[tag[0], tag[1]].BackColor = Color.Yellow;
+                }
+                else
+                {
+                    MessageBox.Show("Koht " + (tag[0]+1) + (tag[1]+1) + " juba ostetud!");
+                }
+            
+
         }
     }
 }
